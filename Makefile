@@ -1,5 +1,6 @@
 SRC_NAME = main.c \
 filler.c \
+behaviours.c \
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 

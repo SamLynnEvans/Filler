@@ -21,8 +21,11 @@ typedef struct s_fill
 	int		py_max;
 }				t_fill;
 
+void	get_contact(t_fill *fill, char *map, char *piece, int i);
+float	distance_from_opp(int coord, t_fill *fill);
+void	get_distance(t_fill *fill, char *piece, int i);
 void	filler(char **line, char *map, t_fill *fill);
-char	*build_piece(char **line, int *coord);
+char	*build_piece(char **line, t_fill *fill);
 void	get_dimensions(int *dimensions, char *line);
 char 	*get_map(char **line, int d[2], int mod);
 void	print_map(char *map, int end_line);
