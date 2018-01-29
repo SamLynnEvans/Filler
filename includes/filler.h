@@ -16,7 +16,9 @@ typedef struct s_fill
 	int		seek_put;
 	float	distance_opp;
 	int		contact;
+	int		contact_put;
 	int		px_max;
+	int		py_max;
 }				t_fill;
 
 void	filler(char **line, char *map, t_fill *fill);
