@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:52:21 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 12:49:18 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 18:46:20 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 # include "ft_printf.h"
 # include "libft.h"
 # include "get_next_line.h"
-
+# include <pthread.h>
 
 typedef struct	s_vis
 {
+	int		score[2];
 	char	*line;
 	char	*OBM;
 	char	**maps;

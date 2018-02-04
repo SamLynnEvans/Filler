@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/04 13:18:40 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 13:22:31 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 15:58:18 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ char	*ft_strcat_i(char *dst, const char *src, int i)
 	unsigned long	j;
 
 	j = 0;
-	while (dst[i])
-		i++;
 	while (src[j])
 		dst[i++] = src[j++];
 	dst[i] = '\0';

@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 11:52:39 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 13:22:48 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 16:20:18 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct		s_list
 {
 	void			*content;
 	size_t			content_size;
+	int				nodes;
 	struct s_list	*next;
 }					t_list;
 

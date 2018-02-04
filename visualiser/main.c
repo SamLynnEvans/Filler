@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:53:03 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 13:15:41 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 18:51:16 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,46 +67,91 @@ void	print_map(char *OBM, int d[2])
 	}
 }
 
-/*free(v.line);
-			if (!v.count++)
-				v.OBM = get_map(&(v.line), v.size, 4);
-			else
-			{
-				tmp = get_map(&(v.line), v.size, 4);
-				v.OBM = ft_strjoin_free(v.OBM, tmp);
-				free(tmp);
-			}
-*/
+void	*thread_second(void *l)
+{
+	t_list	*lst;
+	int		len;
+	int		half;
+	char 	*dst;
+	int		count;
+
+	count = 0;
+	lst = (t_list *)l;
+	half = lst->nodes / 2;
+	len = half * lst->content_size;
+	dst = malloc(len + 1);
+	len = 0;
+	while (len++ < half )
+	{
+		ft_strcat_i(dst, lst->content, count);
+		count += lst->content_size;
+		lst = lst->next;
+	}
+	dst[count] = '\0';
+	return ((void *)dst);
+}
+
+
+void	build_one_big_map(t_vis *v, t_list *lst)
+{
+	pthread_t	fast;
+	int			half;
+	int			i;
+	char		*tmp;
+
+	i = 0;
+	lst->nodes = v->count;
+	half = v->count / 2;
+	pthread_create(&fast, NULL, thread_second, lst);
+	tmp = malloc((lst->nodes - half) * lst->content_size + 1);
+	while (i++ < half)
+		lst = lst->next;
+	lst = lst->next;
+	i = 0;
+	while (lst != NULL)
+	{
+		ft_strcat_i(tmp, lst->content, i);
+		i += lst->content_size;
+		lst = lst->next;
+	}
+	pthread_join(fast, (void *)&(v->OBM));
+	v->OBM = ft_strjoin_free(v->OBM, tmp);
+	free(tmp);
+}
+
+void	del_content(void *content, size_t content_size)
+{
+	if (content_size)
+		;
+	free(content);
+}
+
 int main()
 {
 	t_vis	v;
 	t_list	*tmp;
 	t_list	*lst;
+	int		i;
 
+	i = 0;
 	v.count = 0;
 	lst = NULL;
 	get_size(v.line, &v);
 	while (get_next_line(0, &(v.line)) > 0)
 	{
+		if (ft_strncmp("==", v.line, 2) == 0)
+			v.score[i++] = ft_atoi(v.line + 10);
 		if (ft_strncmp("   ", v.line, 2) == 0)
 		{
 			tmp = ft_lstnew_ptr((void *)(get_map(&(v.line), v.size, 4)), v.size[X] * v.size[Y]);
 			ft_lstaddend(&lst, tmp);
 			v.count++;
 		}
-		else if (ft_strncmp("==", v.line, 2) == 0)
-		{
-			ft_putnbr(ft_atoi(v.line + 10));
-			ft_putchar('\n');
-			free(v.line);
-		}
 		else
 			free(v.line);
 	}
-	v.OBM = ft_lsttstr_del(&lst);
-//	print_map(v.OBM, v.size);
-	v.i = 0;
-	ft_putnbr(v.count);
+	build_one_big_map(&v, lst);
+	ft_lstdel(&lst, &del_content);
 	visualiser(&v);
 	//print_map(v.OBM, v.size);
 }
