@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:53:03 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 18:51:16 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 20:25:35 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int main()
 	v.count = 0;
 	lst = NULL;
 	get_size(v.line, &v);
+	ft_putstr("loading game... (big maps take longer...)\n");
 	while (get_next_line(0, &(v.line)) > 0)
 	{
 		if (ft_strncmp("==", v.line, 2) == 0)
@@ -153,5 +154,4 @@ int main()
 	build_one_big_map(&v, lst);
 	ft_lstdel(&lst, &del_content);
 	visualiser(&v);
-	//print_map(v.OBM, v.size);
 }

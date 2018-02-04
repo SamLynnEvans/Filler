@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 21:31:57 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 18:56:37 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 20:13:10 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@ void	build_borders(t_vis *v)
 	int	x;
 	int	y;
 	int	tmp;
+	int h;
+	int	w;
 
-	y = 0;
-	while (y <= v->size[Y] * v->height)
+	h = (1000 - v->height * v->size[Y]) / 2 - 1;
+	w = (800 - v->width * v->size[X]) / 2 - 1;
+	y = h;
+	while (y < v->size[Y] * v->height + h + 1)
 	{
-		x = 0;
-		while (x <= v->width * v->size[X])
+		x = w;
+		while (x < v->width * v->size[X] + w + 1)
 		{
-			tmp = x * 4 + y *v->sl;;
+			tmp = x * 4 + y * v->sl;;
 			v->data[tmp++] = 0xBD; 
 			v->data[tmp++] = 0xBD; 
 			v->data[tmp++] = 0xBD;
@@ -34,38 +38,44 @@ void	build_borders(t_vis *v)
 	}
 }
 
-/*
-void	add_mapkey(t_input *i)
+void	draw_banner(t_vis *v)
 {
-	int x;
+	int	x;
+	int	y;
+	int	tmp;
 
-	x = (i->isize - 850) / 2;
-	mlx_string_put(i->mlx, i->win, 30, 20, 0x000000,
-	"- Slynn-ev homebrewed wire frame v1.0");
-	mlx_string_put(i->mlx, i->win, x, i->isize - 47, 0x000000, "KEY");
-	mlx_string_put(i->mlx, i->win, x + 80, i->isize - 60, 0x000000,
-	"+ / - : zoom in / out");
-	mlx_string_put(i->mlx, i->win, x + 80, i->isize - 35, 0x000000,
-	"i / o : altitude up / down");
-	mlx_string_put(i->mlx, i->win, x + 380, i->isize - 60, 0x000000,
-	"< / >  : rotate up / down");
-	mlx_string_put(i->mlx, i->win, x + 380, i->isize - 35, 0x000000,
-	"arrows : move shape");
-	mlx_string_put(i->mlx, i->win, x + 680, i->isize - 60, 0x000000,
-	"  p   : colour peaks");
-	mlx_string_put(i->mlx, i->win, x + 680, i->isize - 35, 0x000000,
-	"c/v/b : colour +/-/0");
+	y = 0;
+	while (y < 150)
+	{
+		x = 0;
+		while (x < 800)
+		{
+			tmp = x * 4 + y * v->sl;
+			v->data[tmp++] = 0x19; 
+			v->data[tmp++] = 0x03; 
+			v->data[tmp++] = 0x56;
+			tmp = x * 4 + (850 + y) * v->sl;
+			v->data[tmp++] = 0x19; 
+			v->data[tmp++] = 0x03; 
+			v->data[tmp++] = 0x56;
+			x++;
+		}
+		y++;
+	}
 }
-*/
+
 void	put_to_image(t_vis *v, int x, int y, int color)
 {
 	int	pos;
 	int	i;
 	int	j;
 	int	tmp;
-	
+	int h[2];
+
+	h[0] = (1000 - v->height * v->size[Y]) / 2;
+	h[1] = (800 - v->width * v->size[X]) / 2;
 	j = 0;
-	pos = (x * 4 * v->width) + (y * v->sl * v->height) + 4 + v->sl;
+	pos = (x * 4 * v->width) + (y * v->sl * v->height) + 4 * h[1] + v->sl * h[0];
 	while (j++ < v->height - 1)
 	{
 		tmp = pos;
@@ -96,6 +106,20 @@ char	*copy_map(t_vis *v)
 	return (map_copy);
 }
 
+void	print_strings(t_vis *v)
+{
+	mlx_string_put(v->mlx, v->win, 320, 70, 0xFFFFFF,
+	"SUPER FILLER 2000");
+	if (v->score_print)
+	{
+		if (v->score[1] > v->score[0])
+			mlx_string_put(v->mlx, v->win, 310, 880, 0xFFFFFF,
+	"PLAYER TWO WINS !!!!");
+		else
+			mlx_string_put(v->mlx, v->win, 300, 940, 0xFFFFFF,
+	"PLAYER ONE WINS !!!!");
+	}
+}
 void	map_toscreen(t_vis *v)
 {
 	int		i;
@@ -103,21 +127,22 @@ void	map_toscreen(t_vis *v)
 
 	i = 0;
 	map_cpy = copy_map(v);
-	v->img = mlx_new_image(v->mlx, v->size[X] * v->width + 1, v->size[Y] * v->height + 1);
+	v->img = mlx_new_image(v->mlx, 800, 1000);
 	v->data = mlx_get_data_addr(v->img, &(v->bpp), &(v->sl), &(v->endian));
+	draw_banner(v);
 	build_borders(v);
 	while (i < v->size[X] * v->size[Y])
 	{
 		if (map_cpy[i] == 'O' || map_cpy[i] == 'o')
-			put_to_image(v, i % v->size[X], i / v->size[X], 0x56f442);
+			put_to_image(v, i % v->size[X], i / v->size[X], 0x4682B4);
 		else if (map_cpy[i] == 'X' || map_cpy[i] == 'x')
-			put_to_image(v, i % v->size[X], i / v->size[X], 0xef8d8d);
+			put_to_image(v, i % v->size[X], i / v->size[X], 0x4B0082);
 		else	
 			put_to_image(v, i % v->size[X], i / v->size[X], 0x2F4F4F);
 		i++;
 	}
-	mlx_put_image_to_window(v->mlx, v->win, v->img,
-	(800 - v->width * v->size[X]) / 2, (1000 - v->height * v->size[Y]) / 2);
+	mlx_put_image_to_window(v->mlx, v->win, v->img, 0, 0);
+	print_strings(v);
 	free(map_cpy);
 	free(v->img);
 	free(v->data);
@@ -126,8 +151,6 @@ void	map_toscreen(t_vis *v)
 void	quit(t_vis *v)
 {
 	free(v->OBM);
-	free(v->img);
-	free(v->data);
 	free(v->win);
 	free(v->mlx);
 	exit(1);
@@ -137,8 +160,10 @@ int		deal_key(int key, t_vis *v)
 {
 	if (key == 53)
 		quit(v);
+	if ((key == 124 && !(v->OBM[v->i])) || key == 126)
+		v->score_print = 1;
 	if (key == 124 && !(v->OBM[v->i]))
-		return (key);
+		v->i -= v->size[X] * v->size[Y];
 	if (key == 126)
 		v->i = (v->count - 2) * v->size[X] * v->size[Y];
 	if (key == 125)
@@ -151,7 +176,7 @@ int		deal_key(int key, t_vis *v)
 	}
 	if (key == 126 || key == 124 || key == 125 || key == 123)
 	{
-		mlx_destroy_image(v->mlx, v->img);
+		mlx_clear_window(v->mlx, v->win);
 		map_toscreen(v);
 	}
 	return (key);
@@ -161,6 +186,7 @@ void	visualiser(t_vis *v)
 {
 	v->width = 10;
 	v->height = 15;
+	v->score_print = 0;
 	if (v->size[X] > 40)
 		v->width = 4;
 	if (v->size[Y] > 40)
@@ -168,7 +194,6 @@ void	visualiser(t_vis *v)
 	v->i = 0;
 	v->mlx = mlx_init();
 	v->win = mlx_new_window(v->mlx, 800, 1000, "FILLER");
-	//draw_banner(v);
 	map_toscreen(v);
 	mlx_hook(v->win, 2, 0, deal_key, v);
 	mlx_loop(v->mlx);

@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:52:21 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 18:46:20 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 20:01:16 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,22 @@
 typedef struct	s_vis
 {
 	int		score[2];
+	int		score_print;
 	char	*line;
 	char	*OBM;
 	char	**maps;
 	int		count;
 	char	*data;
+	char	*data2;
 	int		bpp;
+	int		bpp2;
 	int		endian;
-	int		first;
+	int		endian2;
 	int		sl;
+	int		sl2;
 	int		i;
 	char	*img;
+	char	*img2;
 	void	*win;
 	void	*mlx;
 	char	*map;
