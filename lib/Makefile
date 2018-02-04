@@ -6,7 +6,7 @@
 #    By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/05 21:56:14 by slynn-ev          #+#    #+#              #
-#    Updated: 2018/02/04 13:25:11 by slynn-ev         ###   ########.fr        #
+#    Updated: 2018/02/04 22:01:29 by slynn-ev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ ft_printf/print_numbers.c \
 ft_printf/unicode.c \
 ft_printf/fd.c \
 libft/ft_atoi.c \
+libft/ft_del_lstcontent.c \
 libft/ft_bzero.c \
 libft/ft_strcat_i.c \
 libft/ft_lstnew_co.c \

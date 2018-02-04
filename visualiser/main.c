@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:53:03 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 20:25:35 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 22:04:46 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,6 @@ char *get_map(char **line, int d[2], int mod)
 	}
 	map[i] = '\0';
 	return (map);
-}
-
-void	print_map(char *OBM, int d[2])
-{
-	int	i;
-
-	i = 0;
-	while (OBM[i])
-	{
-		if (!(i % d[X]))
-			ft_putchar('\n');
-		ft_putchar(OBM[i++]);
-		if (!(i % (d[X] * d[Y])))
-			ft_putchar('\n');
-	}
 }
 
 void	*thread_second(void *l)
@@ -119,19 +104,12 @@ void	build_one_big_map(t_vis *v, t_list *lst)
 	free(tmp);
 }
 
-void	del_content(void *content, size_t content_size)
-{
-	if (content_size)
-		;
-	free(content);
-}
-
 int main()
 {
+	int		i;
 	t_vis	v;
 	t_list	*tmp;
 	t_list	*lst;
-	int		i;
 
 	i = 0;
 	v.count = 0;
@@ -151,7 +129,5 @@ int main()
 		else
 			free(v.line);
 	}
-	build_one_big_map(&v, lst);
-	ft_lstdel(&lst, &del_content);
-	visualiser(&v);
+	visualiser(&v, lst);
 }

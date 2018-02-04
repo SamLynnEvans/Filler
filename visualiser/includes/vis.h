@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:52:21 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 20:01:16 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 22:04:29 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct	s_vis
 	int		height;
 }				t_vis;
 
-void	visualiser(t_vis *v);
+void	visualiser(t_vis *v, t_list *lst);
+void	build_one_big_map(t_vis *v, t_list *lst);
 
 #endif

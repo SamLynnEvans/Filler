@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 21:31:57 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 20:13:10 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 22:05:05 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,10 @@ int		deal_key(int key, t_vis *v)
 	return (key);
 }
 
-void	visualiser(t_vis *v)
+void	visualiser(t_vis *v, t_list *lst)
 {
+	build_one_big_map(v, lst);
+	ft_lstdel(&lst, ft_del_content);
 	v->width = 10;
 	v->height = 15;
 	v->score_print = 0;
