@@ -21,6 +21,8 @@ typedef struct s_fill
 	int		py_max;
 	int		px_min;
 	int		py_min;
+	int		pw;
+	int		ph;
 }				t_fill;
 
 void	get_contact(t_fill *fill, char *map, char *piece, int i);

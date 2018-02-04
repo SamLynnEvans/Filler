@@ -23,17 +23,16 @@ CPPFLAGS = -Iincludes \
 
 LIB = lib
 
-LIB_A = libftprintf.a
+LIB_A = libftprintf.a \
 
 all: library $(NAME)
 
 $(NAME): $(OBJ) $(LIB)
-	gcc -o $(NAME) $(OBJ) $(LIB)/$(LIB_A)
+	gcc $(FLAGS) -o $(NAME) $(OBJ) $(LIB)/$(LIB_A)
 
 library:
 	@make -C $(LIB)
 	
-
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(DEPS)
 	@mkdir -p $(OBJ_PATH)
 	gcc $(FLAGS) -o $@ -c $< $(CPPFLAGS)
@@ -43,9 +42,7 @@ clean:
 	rm -fr $(OBJ_PATH)
 
 fclean : clean
-	rm $(LIB)/$(LIB_A)
-	rm $(NAME)
+	rm -f $(LIB)/$(LIB_A)
+	rm -f $(NAME)
 
-re : 
-	$(MAKE) fclean
-	$(MAKE) all
+re : fclean all

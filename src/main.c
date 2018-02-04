@@ -53,19 +53,6 @@ void	get_dimensions(int *dimensions, char *line)
 	}
 }
 
-void	print_map(char *map, int end_line)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		ft_putchar(map[i++]);
-		if (!(i % end_line))
-			ft_putchar('\n');
-	}
-}
-
 int main()
 {
 	char	*line;
