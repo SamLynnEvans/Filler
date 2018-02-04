@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 11:52:39 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 12:45:19 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 13:22:48 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+
 int					ft_numlen(long long num, int base, size_t size);
+char				*ft_strcat_i(char *dst, const char *src, int i);
 int					ft_unumlen(unsigned long long num);
 void				ft_unicode_putchar(int c);
 int					ft_power(int num, int power);
@@ -79,6 +81,7 @@ char const *s2, size_t n);
 size_t				ft_strlcat(char *dst,
 const char *src, size_t size);
 t_list				*ft_lstnew(void const *content, size_t content_size);
+t_list				*ft_lstnew_co(void const *content);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				*ft_memchr(const void *s, int c, size_t n);
 void				ft_bzero(void *b, size_t len);

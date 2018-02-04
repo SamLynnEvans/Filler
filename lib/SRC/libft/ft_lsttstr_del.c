@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 16:59:23 by slynn-ev          #+#    #+#             */
-/*   Updated: 2017/12/15 14:56:52 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 13:28:07 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ char	*ft_lsttstr_del(t_list **list)
 	}
 	if (!(dst = (char *)ft_memalloc(count + 1)))
 		return (NULL);
+	dst[0] = '\0';
+	count = 0;
 	while (*list != NULL)
 	{
 		tmp = *list;
-		ft_strcat(dst, tmp->content);
+		ft_strcat_i(dst, tmp->content, count);
+		count += tmp->content_size;
 		free(tmp->content);
 		*list = (*list)->next;
 		free(tmp);

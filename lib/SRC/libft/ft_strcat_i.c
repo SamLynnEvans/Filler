@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_co.c                                     :+:      :+:    :+:   */
+/*   ft_strcat_i.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/04 12:47:35 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 13:05:19 by slynn-ev         ###   ########.fr       */
+/*   Created: 2018/02/04 13:18:40 by slynn-ev          #+#    #+#             */
+/*   Updated: 2018/02/04 13:22:31 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_lstnew_co(void const *content)
+char	*ft_strcat_i(char *dst, const char *src, int i)
 {
-	t_list *tmp;
+	unsigned long	j;
 
-	if (!(tmp = (t_list *)malloc(sizeof(t_list))))
-		return (NULL);
-	if (content == NULL)
-	{
-		tmp->content = NULL;
-		tmp->content_size = 0;
-		tmp->next = NULL;
-		return (tmp);
-	}
-	tmp->content = (void *) content;
-	tmp->next = NULL;
-	return (tmp);
+	j = 0;
+	while (dst[i])
+		i++;
+	while (src[j])
+		dst[i++] = src[j++];
+	dst[i] = '\0';
+	return (dst);
 }

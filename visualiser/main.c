@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:53:03 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 12:36:18 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/04 13:15:41 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,9 @@ void	print_map(char *OBM, int d[2])
 		if (!(i % (d[X] * d[Y])))
 			ft_putchar('\n');
 	}
-
 }
 
-int main()
-{
-	t_vis	v;
-	char	*tmp;
-
-	v.count = 0;
-	get_size(v.line, &v);
-	while (get_next_line(0, &(v.line)) > 0)
-	{
-		if (ft_strncmp("   ", v.line, 2) == 0)
-		{
-			free(v.line);
+/*free(v.line);
 			if (!v.count++)
 				v.OBM = get_map(&(v.line), v.size, 4);
 			else
@@ -88,6 +76,23 @@ int main()
 				v.OBM = ft_strjoin_free(v.OBM, tmp);
 				free(tmp);
 			}
+*/
+int main()
+{
+	t_vis	v;
+	t_list	*tmp;
+	t_list	*lst;
+
+	v.count = 0;
+	lst = NULL;
+	get_size(v.line, &v);
+	while (get_next_line(0, &(v.line)) > 0)
+	{
+		if (ft_strncmp("   ", v.line, 2) == 0)
+		{
+			tmp = ft_lstnew_ptr((void *)(get_map(&(v.line), v.size, 4)), v.size[X] * v.size[Y]);
+			ft_lstaddend(&lst, tmp);
+			v.count++;
 		}
 		else if (ft_strncmp("==", v.line, 2) == 0)
 		{
@@ -98,6 +103,8 @@ int main()
 		else
 			free(v.line);
 	}
+	v.OBM = ft_lsttstr_del(&lst);
+//	print_map(v.OBM, v.size);
 	v.i = 0;
 	ft_putnbr(v.count);
 	visualiser(&v);
