@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:53:03 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 22:04:46 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/06 14:56:21 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	get_size(char *line, t_vis *v)
 	}
 	free(line);
 }
-char *get_map(char **line, int d[2], int mod)
+
+char	*get_map(char **line, int d[2], int mod)
 {
 	char	*map;
 	int		i;
@@ -41,7 +42,7 @@ char *get_map(char **line, int d[2], int mod)
 	i = 0;
 	if (!(map = malloc(sizeof(char) * d[0] * d[1] + 1)))
 		return (NULL);
-	while (i < d[0] * d[1]  && get_next_line(0, line) > 0)
+	while (i < d[0] * d[1] && get_next_line(0, line) > 0)
 	{
 		map[i] = line[0][i % d[1] + mod];
 		while (++i % d[1])
@@ -57,7 +58,7 @@ void	*thread_second(void *l)
 	t_list	*lst;
 	int		len;
 	int		half;
-	char 	*dst;
+	char	*dst;
 	int		count;
 
 	count = 0;
@@ -66,7 +67,7 @@ void	*thread_second(void *l)
 	len = half * lst->content_size;
 	dst = malloc(len + 1);
 	len = 0;
-	while (len++ < half )
+	while (len++ < half)
 	{
 		ft_strcat_i(dst, lst->content, count);
 		count += lst->content_size;
@@ -75,7 +76,6 @@ void	*thread_second(void *l)
 	dst[count] = '\0';
 	return ((void *)dst);
 }
-
 
 void	build_one_big_map(t_vis *v, t_list *lst)
 {
@@ -99,12 +99,12 @@ void	build_one_big_map(t_vis *v, t_list *lst)
 		i += lst->content_size;
 		lst = lst->next;
 	}
-	pthread_join(fast, (void *)&(v->OBM));
-	v->OBM = ft_strjoin_free(v->OBM, tmp);
+	pthread_join(fast, (void *)&(v->obm));
+	v->obm = ft_strjoin_free(v->obm, tmp);
 	free(tmp);
 }
 
-int main()
+int		main(void)
 {
 	int		i;
 	t_vis	v;
@@ -122,7 +122,8 @@ int main()
 			v.score[i++] = ft_atoi(v.line + 10);
 		if (ft_strncmp("   ", v.line, 2) == 0)
 		{
-			tmp = ft_lstnew_ptr((void *)(get_map(&(v.line), v.size, 4)), v.size[X] * v.size[Y]);
+			tmp = ft_lstnew_ptr((void *)(get_map(&(v.line), v.size, 4)),
+			v.size[X] * v.size[Y]);
 			ft_lstaddend(&lst, tmp);
 			v.count++;
 		}

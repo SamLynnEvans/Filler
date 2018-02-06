@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 11:52:39 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 22:02:45 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/06 13:42:21 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct		s_list
 	int				nodes;
 	struct s_list	*next;
 }					t_list;
-
 
 void				ft_del_content(void *content, size_t content_size);
 int					ft_numlen(long long num, int base, size_t size);

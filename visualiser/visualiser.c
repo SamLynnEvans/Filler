@@ -6,63 +6,11 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 21:31:57 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 22:05:05 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/06 14:49:52 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vis.h"
-
-void	build_borders(t_vis *v)
-{
-	int	x;
-	int	y;
-	int	tmp;
-	int h;
-	int	w;
-
-	h = (1000 - v->height * v->size[Y]) / 2 - 1;
-	w = (800 - v->width * v->size[X]) / 2 - 1;
-	y = h;
-	while (y < v->size[Y] * v->height + h + 1)
-	{
-		x = w;
-		while (x < v->width * v->size[X] + w + 1)
-		{
-			tmp = x * 4 + y * v->sl;;
-			v->data[tmp++] = 0xBD; 
-			v->data[tmp++] = 0xBD; 
-			v->data[tmp++] = 0xBD;
-			x++;
-		}
-		y++;
-	}
-}
-
-void	draw_banner(t_vis *v)
-{
-	int	x;
-	int	y;
-	int	tmp;
-
-	y = 0;
-	while (y < 150)
-	{
-		x = 0;
-		while (x < 800)
-		{
-			tmp = x * 4 + y * v->sl;
-			v->data[tmp++] = 0x19; 
-			v->data[tmp++] = 0x03; 
-			v->data[tmp++] = 0x56;
-			tmp = x * 4 + (850 + y) * v->sl;
-			v->data[tmp++] = 0x19; 
-			v->data[tmp++] = 0x03; 
-			v->data[tmp++] = 0x56;
-			x++;
-		}
-		y++;
-	}
-}
 
 void	put_to_image(t_vis *v, int x, int y, int color)
 {
@@ -75,7 +23,8 @@ void	put_to_image(t_vis *v, int x, int y, int color)
 	h[0] = (1000 - v->height * v->size[Y]) / 2;
 	h[1] = (800 - v->width * v->size[X]) / 2;
 	j = 0;
-	pos = (x * 4 * v->width) + (y * v->sl * v->height) + 4 * h[1] + v->sl * h[0];
+	pos = (x * 4 * v->width) + (y * v->sl * v->height)
+	+ 4 * h[1] + v->sl * h[0];
 	while (j++ < v->height - 1)
 	{
 		tmp = pos;
@@ -100,30 +49,16 @@ char	*copy_map(t_vis *v)
 	map_copy = malloc(sizeof(char) * v->size[X] * v->size[Y] + 1);
 	while (i < v->size[X] * v->size[Y])
 	{
-		map_copy[i++] = v->OBM[v->i++];
+		map_copy[i++] = v->obm[v->i++];
 	}
 	map_copy[i] = '\0';
 	return (map_copy);
 }
 
-void	print_strings(t_vis *v)
-{
-	mlx_string_put(v->mlx, v->win, 320, 70, 0xFFFFFF,
-	"SUPER FILLER 2000");
-	if (v->score_print)
-	{
-		if (v->score[1] > v->score[0])
-			mlx_string_put(v->mlx, v->win, 310, 880, 0xFFFFFF,
-	"PLAYER TWO WINS !!!!");
-		else
-			mlx_string_put(v->mlx, v->win, 300, 940, 0xFFFFFF,
-	"PLAYER ONE WINS !!!!");
-	}
-}
 void	map_toscreen(t_vis *v)
 {
 	int		i;
-	char 	*map_cpy;
+	char	*map_cpy;
 
 	i = 0;
 	map_cpy = copy_map(v);
@@ -137,7 +72,7 @@ void	map_toscreen(t_vis *v)
 			put_to_image(v, i % v->size[X], i / v->size[X], 0x4682B4);
 		else if (map_cpy[i] == 'X' || map_cpy[i] == 'x')
 			put_to_image(v, i % v->size[X], i / v->size[X], 0x4B0082);
-		else	
+		else
 			put_to_image(v, i % v->size[X], i / v->size[X], 0x2F4F4F);
 		i++;
 	}
@@ -148,21 +83,13 @@ void	map_toscreen(t_vis *v)
 	free(v->data);
 }
 
-void	quit(t_vis *v)
-{
-	free(v->OBM);
-	free(v->win);
-	free(v->mlx);
-	exit(1);
-}
-
 int		deal_key(int key, t_vis *v)
 {
 	if (key == 53)
 		quit(v);
-	if ((key == 124 && !(v->OBM[v->i])) || key == 126)
+	if ((key == 124 && !(v->obm[v->i])) || key == 126)
 		v->score_print = 1;
-	if (key == 124 && !(v->OBM[v->i]))
+	if (key == 124 && !(v->obm[v->i]))
 		v->i -= v->size[X] * v->size[Y];
 	if (key == 126)
 		v->i = (v->count - 2) * v->size[X] * v->size[Y];

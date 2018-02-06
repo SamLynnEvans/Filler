@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:52:21 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/04 22:04:29 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/06 14:49:01 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct	s_vis
 	int		score[2];
 	int		score_print;
 	char	*line;
-	char	*OBM;
+	char	*obm;
 	char	**maps;
 	int		count;
 	char	*data;
@@ -48,7 +48,11 @@ typedef struct	s_vis
 	int		height;
 }				t_vis;
 
-void	visualiser(t_vis *v, t_list *lst);
-void	build_one_big_map(t_vis *v, t_list *lst);
+void			visualiser(t_vis *v, t_list *lst);
+void			build_one_big_map(t_vis *v, t_list *lst);
+void			print_strings(t_vis *v);
+void			quit(t_vis *v);
+void			build_borders(t_vis *v);
+void			draw_banner(t_vis *v);
 
 #endif

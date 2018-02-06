@@ -1,7 +1,18 @@
-#include "filler.h"
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/06 13:24:31 by slynn-ev          #+#    #+#             */
+/*   Updated: 2018/02/06 14:53:09 by slynn-ev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-char *get_map(char **line, int d[2], int mod)
+#include "filler.h"
+
+char	*get_map(char **line, int d[2], int mod)
 {
 	char	*map;
 	int		i;
@@ -9,7 +20,7 @@ char *get_map(char **line, int d[2], int mod)
 	i = 0;
 	if (!(map = malloc(sizeof(char) * d[0] * d[1] + 1)))
 		return (NULL);
-	while (i < d[0] * d[1]  && get_next_line(0, line) > 0)
+	while (i < d[0] * d[1] && get_next_line(0, line) > 0)
 	{
 		if ((int)ft_strlen(*line) - mod != d[1])
 			return (NULL);
@@ -40,7 +51,7 @@ void	get_oppcentre(char *map, t_fill *fill)
 		}
 		i++;
 	}
-} 
+}
 
 void	get_dimensions(int *dimensions, char *line)
 {
@@ -59,13 +70,13 @@ void	get_dimensions(int *dimensions, char *line)
 	}
 }
 
-int	get_info(char **line, t_fill *fill)
+int		get_info(char **line, t_fill *fill)
 {
 	int	i;
 	int	ret;
 
 	i = 0;
-	while ((ret = get_next_line(0, line)) ==  1)
+	while ((ret = get_next_line(0, line)) == 1)
 	{
 		while (i < 10)
 			if (!(line[0][i++]))
@@ -88,7 +99,7 @@ int	get_info(char **line, t_fill *fill)
 	return (ret);
 }
 
-int main()
+int		main(void)
 {
 	char	*line;
 	t_fill	fill;
@@ -101,7 +112,7 @@ int main()
 	while (get_next_line(0, &line) > 0)
 	{
 		if (line[0] == ' ')
-		{	
+		{
 			if (!(map = get_map(&line, fill.d, 4)))
 				return (0);
 			if (!(first++))

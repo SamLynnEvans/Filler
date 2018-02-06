@@ -6,21 +6,11 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 13:24:55 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/03 18:45:36 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/06 13:34:21 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-void	put_coords(int c1, int c2, t_fill *fill)
-{
-	c1 -= fill->px_min;
-	c2 -= fill->py_min;
-	ft_putnbr(c2);
-	ft_putchar(' ');
-	ft_putnbr(c1);
-	ft_putchar('\n');
-}
 
 void	get_xymax(char *piece, t_fill *fill)
 {
@@ -54,14 +44,14 @@ char	*trim_piece(char **piece, t_fill *fill)
 	char	*trim;
 	int		j;
 
-
 	j = 0;
-	trim = malloc(sizeof(char) * (fill->py_max  - fill->py_min + 1)
+	trim = malloc(sizeof(char) * (fill->py_max - fill->py_min + 1)
 	* (fill->px_max - fill->px_min + 1) + 1);
 	i = fill->py_min * fill->p_dim[1];
 	while (i < (fill->py_max + 1) * fill->p_dim[1])
 	{
-		if ((i % fill->p_dim[1] < fill->px_min) || (i % fill->p_dim[1]) > fill->px_max)
+		if ((i % fill->p_dim[1] < fill->px_min)
+		|| (i % fill->p_dim[1]) > fill->px_max)
 			i++;
 		else
 			trim[j++] = piece[0][i++];
@@ -98,7 +88,8 @@ int		can_put(char *map, t_fill *fill, char *piece, int i)
 	j = 0;
 	while (piece[j])
 	{
-		if (piece[j] == '*' && ((i % fill->d[1] + j % fill->p_dim[1]) < fill->d[1]))
+		if (piece[j] == '*' &&
+		((i % fill->d[1] + j % fill->p_dim[1]) < fill->d[1]))
 		{
 			x = i + (j % fill->p_dim[1]);
 			if (map[x] == fill->smother || map[x] == fill->smother + 32)
@@ -113,31 +104,31 @@ int		can_put(char *map, t_fill *fill, char *piece, int i)
 	return (count == 1) ? 1 : 0;
 }
 
-void	filler(char **line, char *map, t_fill *fill)
+void	filler(char **line, char *map, t_fill *f)
 {
 	int		i;
 	int		ret;
 	char	*piece;
-	
+
 	i = 0;
-	piece = build_piece(line, fill);
-	while (fill->d[0] > i / fill->d[1] + fill->p_dim[0])
+	piece = build_piece(line, f);
+	while (f->d[0] > i / f->d[1] + f->p_dim[0])
 	{
-		if (i % fill->d[1] + fill->p_dim[1] > fill->d[1])
+		if (i % f->d[1] + f->p_dim[1] > f->d[1])
 		{
-			i += fill->p_dim[1];
+			i += f->p_dim[1];
 			continue ;
 		}
-		if ((ret = can_put(map, fill, piece, i)) == 1)
+		if ((ret = can_put(map, f, piece, i)) == 1)
 		{
-			get_contact(fill, map, piece, i);
-			get_distance(fill, piece, i);
+			get_contact(f, map, piece, i);
+			get_distance(f, piece, i);
 		}
 		i++;
 	}
-	if (fill->contact)
-		put_coords(fill->contact_put % fill->d[1], fill->contact_put / fill->d[1], fill);
+	if (f->contact)
+		put_coords(f->contact_put % f->d[1], f->contact_put / f->d[1], f);
 	else
-		put_coords(fill->seek_put % fill->d[1], fill->seek_put / fill->d[1], fill);
+		put_coords(f->seek_put % f->d[1], f->seek_put / f->d[1], f);
 	free(piece);
 }

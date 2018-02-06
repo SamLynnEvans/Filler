@@ -6,11 +6,11 @@
 #    By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/03 17:56:31 by slynn-ev          #+#    #+#              #
-#    Updated: 2018/02/04 12:31:06 by slynn-ev         ###   ########.fr        #
+#    Updated: 2018/02/06 14:50:49 by slynn-ev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c visualiser.c
+SRC = main.c visualiser.c borders.c
 
 DEPS = includes/vis.h \
 
