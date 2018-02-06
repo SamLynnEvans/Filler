@@ -11,9 +11,15 @@ char *get_map(char **line, int d[2], int mod)
 		return (NULL);
 	while (i < d[0] * d[1]  && get_next_line(0, line) > 0)
 	{
+		if ((int)ft_strlen(*line) - mod != d[1])
+			return (NULL);
 		map[i] = line[0][i % d[1] + mod];
 		while (++i % d[1])
+		{
+			if ((int)ft_strlen(*line) - mod != d[1])
+				return (NULL);
 			map[i] = line[0][i % d[1] + mod];
+		}
 		free(*line);
 	}
 	map[i] = '\0';
@@ -53,6 +59,35 @@ void	get_dimensions(int *dimensions, char *line)
 	}
 }
 
+int	get_info(char **line, t_fill *fill)
+{
+	int	i;
+	int	ret;
+
+	i = 0;
+	while ((ret = get_next_line(0, line)) ==  1)
+	{
+		while (i < 10)
+			if (!(line[0][i++]))
+				return (-1);
+		if (i++ == 10 && ft_strncmp("$$$ exec p", *line, 10) != 0)
+			return (-1);
+		if (line[0][0] == '$')
+		{
+			fill->smother = (line[0][10] == '1') ? 'O' : 'X';
+			fill->opp = (fill->smother == 'O') ? 'X' : 'O';
+		}
+		if (!(ft_strncmp(*line, "Pl", 2)))
+		{
+			get_dimensions(fill->d, *line);
+			free(*line);
+			break ;
+		}
+		free(*line);
+	}
+	return (ret);
+}
+
 int main()
 {
 	char	*line;
@@ -61,15 +96,10 @@ int main()
 	int		first;
 
 	first = 0;
+	if (get_info(&line, &fill) != 1)
+		return (0);
 	while (get_next_line(0, &line) > 0)
 	{
-		if (line[0] == '$')
-		{
-			fill.smother = (line[10] == '1') ? 'O' : 'X';
-			fill.opp = (fill.smother == 'O') ? 'X' : 'O';
-		}
-		if (!(ft_strncmp(line, "Pl", 2)))
-			get_dimensions(fill.d, line);
 		if (line[0] == ' ')
 		{	
 			if (!(map = get_map(&line, fill.d, 4)))

@@ -28,7 +28,7 @@ LIB_A = libftprintf.a \
 all: library $(NAME)
 
 $(NAME): $(OBJ) $(LIB)
-	gcc $(FLAGS) -o $(NAME) $(OBJ) $(LIB)/$(LIB_A)
+	gcc $(FLAGS) -o $(NAME) $(OBJ) $(LIB)/$(LIB_A) -g
 
 library:
 	@make -C $(LIB)
