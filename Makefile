@@ -12,16 +12,16 @@ SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 
 OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
-NAME = slynnev.filler
+NAME = slynn-ev.filler
 
 DEPS = includes/filler.h
 
 FLAGS = -Wall -Wextra -Werror
 
 CPPFLAGS = -Iincludes \
--Ilib/Includes \
+-Ilibft/Includes \
 
-LIB = lib
+LIB = libft
 
 LIB_A = libftprintf.a \
 

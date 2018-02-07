@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 14:37:34 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/06 14:49:47 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/06 17:19:53 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,21 @@ void	print_strings(t_vis *v)
 			mlx_string_put(v->mlx, v->win, 310, 880, 0xFFFFFF,
 	"PLAYER TWO WINS !!!!");
 		else
-			mlx_string_put(v->mlx, v->win, 300, 940, 0xFFFFFF,
+			mlx_string_put(v->mlx, v->win, 300, 920, 0xFFFFFF,
 	"PLAYER ONE WINS !!!!");
 	}
+}
+
+void	check(t_vis *v)
+{
+	char *line;
+
+	if (get_next_line(0, &line) != 1)
+		exit(1);
+	if (ft_strncmp(line, "# --------------", 16) != 0)
+		exit(1);
+	ft_putstr("loading game... (big maps take longer...)\n");
+	get_size(line, v);
 }
 
 void	quit(t_vis *v)

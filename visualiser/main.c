@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:53:03 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/06 14:56:21 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/06 17:18:34 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,28 @@ char	*get_map(char **line, int d[2], int mod)
 {
 	char	*map;
 	int		i;
+	int		ret;
 
 	i = 0;
 	if (!(map = malloc(sizeof(char) * d[0] * d[1] + 1)))
 		return (NULL);
-	while (i < d[0] * d[1] && get_next_line(0, line) > 0)
+	while (i < d[0] * d[1] && (ret = get_next_line(0, line)) > 0)
 	{
+		if ((int)ft_strlen(*line) - mod != d[1])
+				return (NULL);
 		map[i] = line[0][i % d[1] + mod];
 		while (++i % d[1])
+		{
+			if ((int)ft_strlen(*line) - mod != d[1])
+				return (NULL);
 			map[i] = line[0][i % d[1] + mod];
+		}
 		free(*line);
 	}
+	if (i != d[0] * d[1])
+		return (NULL);
 	map[i] = '\0';
-	return (map);
+	return ((ret == -1) ? NULL : map);
 }
 
 void	*thread_second(void *l)
@@ -114,16 +123,16 @@ int		main(void)
 	i = 0;
 	v.count = 0;
 	lst = NULL;
-	get_size(v.line, &v);
-	ft_putstr("loading game... (big maps take longer...)\n");
+	check(&v);
 	while (get_next_line(0, &(v.line)) > 0)
 	{
 		if (ft_strncmp("==", v.line, 2) == 0)
 			v.score[i++] = ft_atoi(v.line + 10);
 		if (ft_strncmp("   ", v.line, 2) == 0)
 		{
-			tmp = ft_lstnew_ptr((void *)(get_map(&(v.line), v.size, 4)),
-			v.size[X] * v.size[Y]);
+			if (!(tmp = ft_lstnew_ptr((void *)(get_map(&(v.line), v.size, 4)),
+			v.size[X] * v.size[Y])))
+					return (0);
 			ft_lstaddend(&lst, tmp);
 			v.count++;
 		}

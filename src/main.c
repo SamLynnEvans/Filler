@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 13:24:31 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/06 14:53:09 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/06 17:20:10 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ char	*get_map(char **line, int d[2], int mod)
 {
 	char	*map;
 	int		i;
+	int		ret;
 
 	i = 0;
 	if (!(map = malloc(sizeof(char) * d[0] * d[1] + 1)))
 		return (NULL);
-	while (i < d[0] * d[1] && get_next_line(0, line) > 0)
+	while (i < d[0] * d[1] && (ret = get_next_line(0, line)) > 0)
 	{
 		if ((int)ft_strlen(*line) - mod != d[1])
 			return (NULL);
@@ -33,8 +34,10 @@ char	*get_map(char **line, int d[2], int mod)
 		}
 		free(*line);
 	}
+	if (i != d[0] * d[1])
+		return (NULL);
 	map[i] = '\0';
-	return (map);
+	return ((ret == -1) ? NULL : map);
 }
 
 void	get_oppcentre(char *map, t_fill *fill)

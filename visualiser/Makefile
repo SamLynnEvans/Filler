@@ -6,7 +6,7 @@
 #    By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/03 17:56:31 by slynn-ev          #+#    #+#              #
-#    Updated: 2018/02/06 14:50:49 by slynn-ev         ###   ########.fr        #
+#    Updated: 2018/02/06 15:09:11 by slynn-ev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRC = main.c visualiser.c borders.c
 DEPS = includes/vis.h \
 
 INCLUDES = -Iincludes/ \
--I../lib/Includes/ \
+-I../libft/Includes/ \
 -Iminilibx/ \
 
 OBJ = $(SRC:.c=.o)
@@ -28,7 +28,7 @@ LIBX = minilibx
 
 LIBX_A = libmlx.a
 
-LIB = ../lib
+LIB = ../libft
 
 LIB_A = libftprintf.a
 

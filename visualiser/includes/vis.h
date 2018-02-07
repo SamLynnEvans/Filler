@@ -6,7 +6,7 @@
 /*   By: slynn-ev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:52:21 by slynn-ev          #+#    #+#             */
-/*   Updated: 2018/02/06 14:49:01 by slynn-ev         ###   ########.fr       */
+/*   Updated: 2018/02/06 17:18:11 by slynn-ev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ void			print_strings(t_vis *v);
 void			quit(t_vis *v);
 void			build_borders(t_vis *v);
 void			draw_banner(t_vis *v);
+void			check(t_vis *v);
+void			get_size(char *line, t_vis *v);
 
 #endif
