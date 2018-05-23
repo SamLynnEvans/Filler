@@ -13,7 +13,7 @@ Once a shape is placed, the squares its placed on belong to the program that pla
 
 The winner is the player who has placed the most pieces at the end.
 
-The full pdf for the project can be read here.
+The full pdf for the project can be read <a href="https://github.com/SamLynnEvans/Filler/blob/master/filler.en.pdf">here</a>.
 
 <b>How to run the program</b>
 
