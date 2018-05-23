@@ -1,6 +1,8 @@
 # Filler
 A competitive packing algorithm that seeks to beat all in the 42 game filler
 
+<img src="https://media.giphy.com/media/3q1uejtiT7nBYAcEta/giphy.gif" />
+
 In the turn-based game filler, two algorithms compete against each other to fill up the most space on a grid. Each player starts as a single square on the grid, and each turn a new shape is presented to each program, which must be placed according to the following rules:
 
 1. The shape cannot go outside the boundaries of the grid.
