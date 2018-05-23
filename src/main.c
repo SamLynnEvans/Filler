@@ -88,7 +88,7 @@ int		get_info(char **line, t_fill *fill)
 			return (-1);
 		if (line[0][0] == '$')
 		{
-			fill->smother = (line[0][10] == '1') ? 'O' : 'X';
+			fill->smother = (line[0][10] == '1') ? 'X' : 'O';
 			fill->opp = (fill->smother == 'O') ? 'X' : 'O';
 		}
 		if (!(ft_strncmp(*line, "Pl", 2)))
